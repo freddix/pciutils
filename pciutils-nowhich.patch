@@ -1,0 +1,31 @@
+--- pciutils-3.0.3/update-pciids.sh~	2008-11-27 17:46:09.000000000 +0100
++++ pciutils-3.0.3/update-pciids.sh	2008-11-27 17:49:47.000000000 +0100
+@@ -19,23 +19,23 @@
+ 	DECOMP="cat"
+ 	SRC="$SRC.gz"
+ 	GREP=zgrep
+-elif which bzip2 >/dev/null 2>&1 ; then
++elif [ -x /usr/bin/bzip2 ]; then
+ 	DECOMP="bzip2 -d"
+ 	SRC="$SRC.bz2"
+-elif which gzip >/dev/null 2>&1 ; then
++elif [ -x /usr/bin/gzip ]; then
+ 	DECOMP="gzip -d"
+ 	SRC="$SRC.gz"
+ else
+ 	DECOMP="cat"
+ fi
+ 
+-if which curl >/dev/null 2>&1 ; then
++if [ -x /usr/bin/curl ]; then
+ 	DL="curl -o $DEST.new $SRC"
+     ${quiet} && DL="$DL -s -S"
+-elif which wget >/dev/null 2>&1 ; then
++elif [ -x /usr/bin/curl ]; then
+ 	DL="wget --no-timestamping -O $DEST.new $SRC"
+ 	${quiet} && DL="$DL -q"
+-elif which lynx >/dev/null 2>&1 ; then
++elif [ -x /usr/bin/lynx ]; then
+ 	DL="eval lynx -source $SRC >$DEST.new"
+ else
+ 	echo >&2 "update-pciids: cannot find curl, wget or lynx"

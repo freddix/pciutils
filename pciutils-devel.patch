@@ -1,0 +1,14 @@
+--- pciutils-2.1.5/Makefile	Sat May  6 23:21:24 2000
++++ pciutils-2.1.5.new/Makefile	Sat May  6 23:20:43 2000
+@@ -59,6 +59,11 @@
+ 	# Remove relics from old versions
+ 	#rm -f $(ROOT)/etc/pci.ids
+ 
++install-devel: all
++	install -d -m 755 $(DESTDIR)$(includedir)/pci $(DESTDIR)$(libdir)
++	install -c -m 644 lib/libpci.a $(DESTDIR)$(libdir)
++	install -c -m 644 lib/pci.h lib/config.h lib/header.h $(DESTDIR)$(includedir)/pci/
++
+ uninstall: all
+ 	rm -f $(DESTDIR)$(sbindir)/lspci $(DESTDIR)$(sbindir)/setpci
+ 	rm -f $(DESTDIR)$(datadir)/pci.ids
