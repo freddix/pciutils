@@ -1,13 +1,13 @@
 Summary:	Linux PCI utilities
 Name:		pciutils
 Version:	3.2.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/%{name}-%{version}.tar.gz
 # Source0-md5:	fdc92c4665bb169022ffe730b3c08313
 Source1:	http://pciids.sourceforge.net/pci.ids
-# Source1-md5:	3867b18e305e3dff4ed289381f6910ca
+# Source1-md5:	47f193b5433d39c04a6d11a0b4d5237d
 Patch0:		%{name}-devel.patch
 Patch1:		%{name}-nowhich.patch
 URL:		http://atrey.karlin.mff.cuni.cz/~mj/pciutils.shtml
