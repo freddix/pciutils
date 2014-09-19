@@ -1,7 +1,8 @@
+sed on PLD Linux spec git://git.pld-linux.org/packages/pciutils.git
 Summary:	Linux PCI utilities
 Name:		pciutils
 Version:	3.2.1
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/System
 Source0:	ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/%{name}-%{version}.tar.gz
