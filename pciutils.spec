@@ -1,18 +1,17 @@
-sed on PLD Linux spec git://git.pld-linux.org/packages/pciutils.git
+# based on PLD Linux spec git://git.pld-linux.org/packages/pciutils.git
 Summary:	Linux PCI utilities
 Name:		pciutils
 Version:	3.2.1
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		Applications/System
 Source0:	ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/%{name}-%{version}.tar.gz
 # Source0-md5:	fdc92c4665bb169022ffe730b3c08313
-Source1:	http://pciids.sourceforge.net/pci.ids
-# Source1-md5:	47f193b5433d39c04a6d11a0b4d5237d
 Patch0:		%{name}-devel.patch
 Patch1:		%{name}-nowhich.patch
 URL:		http://atrey.karlin.mff.cuni.cz/~mj/pciutils.shtml
 BuildRequires:	zlib-devel
+Requires:	hwids
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,14 +42,6 @@ Static version of PCI library.
 %patch0 -p1
 %patch1 -p1
 
-# paranoid check whether pci.ids in _sourcedir isn't too old
-if [ $(wc -l < %{SOURCE1}) -lt $(wc -l < pci.ids) ] ; then
-	: pci.ids needs to be updated
-	exit 0
-fi
-
-install %{SOURCE1} .
-
 ln -sf lib pci
 
 %build
@@ -62,7 +53,8 @@ ln -sf lib pci
 	LIBDIR=%{_libdir}	\
 	OPT="%{rpmcflags}"	\
 	PREFIX=%{_prefix}	\
-	ZLIB=yes DNS=yes SHARED=yes
+	SHAREDIR=%{_datadir}/hwids  \
+	ZLIB=no DNS=yes SHARED=yes
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -73,8 +65,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_datadir},%{_mandir}/man8,%{_libdir},%{
 	LIBDIR=%{_libdir}	\
 	PREFIX=%{_prefix}	\
 	SBINDIR=%{_sbindir}	\
-	SHAREDIR=%{_datadir}	\
-	PCI_IDS=pci.ids
+	SHAREDIR=%{_datadir}/hwids
 
 cd $RPM_BUILD_ROOT%{_libdir}
 ln -sf libpci.so.*.*.* libpci.so
@@ -92,14 +83,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README TODO
 %attr(755,root,root) %{_sbindir}/lspci
 %attr(755,root,root) %{_sbindir}/setpci
-%attr(755,root,root) %{_sbindir}/update-pciids
 %attr(755,root,root) %ghost %{_libdir}/libpci.so.3
 %attr(755,root,root) %{_libdir}/libpci.so.*.*.*
-%{_datadir}/pci.ids
 %{_mandir}/man7/pcilib.7*
 %{_mandir}/man8/lspci.8*
 %{_mandir}/man8/setpci.8*
-%{_mandir}/man8/update-pciids.8*
 
 %files devel
 %defattr(644,root,root,755)
